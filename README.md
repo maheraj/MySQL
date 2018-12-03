@@ -41,9 +41,30 @@ WHERE
 * ROLLUP
 
 ## STORE PROCEDURE
+```
 DELIMITER //
 CREATE PROCEDURE GetAllProducts()
 BEGIN
 SELECT * FROM products;
 END//
 DELIMETER ;
+```
+
+## TRIGGER
+
+```
+DELIMITER $$
+CREATE TRIGGER before_employee_update
+    BEFORE UPDATE ON employee
+    FOR EACH ROW
+BEGIN
+    INSERT INTO employee_audit
+    SET action = 'update'
+    employeeNumber = OLD.employeeNumber,
+    lastName = OLD.lastName,
+    changedat = NOW();
+END$$
+DELIMITER ;
+
+
+```
